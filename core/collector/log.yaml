@@ -1,0 +1,19 @@
+version: 1
+formatters:
+  simple:
+    format: '%(asctime)s | %(lineno)d:%(filename)-20s |%(levelname)-8s| %(message)s'
+handlers:
+  file_handler:
+    class: logging.FileHandler
+    level: DEBUG
+    filename: /Users/paco/Proyectos/osint/logs/collector/paste.log
+    formatter: simple
+
+loggers:
+  pastes:
+    level: DEBUG
+    handlers: [file_handler]
+    propagate: no
+root:
+  level: DEBUG
+  handlers: [file_handler]

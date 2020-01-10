@@ -1,0 +1,142 @@
+swagger: "2.0"
+
+info:
+  title: "My first API"
+  version: "1.0"
+
+
+paths:
+  /paste:
+    get:
+      operationId: api.pastes.search
+      tags:
+        - Paste
+      summary: Read the entire set of pastes
+      description: Read the entire set of people, sorted by last name
+      responses:
+        200:
+          description: Fetch a list of pastes
+          schema:
+            type: object
+            properties:
+              payload:
+                type: array
+                items:
+                 $ref: '#/definitions/Paste'
+              length:
+                type: integer
+                format: int64
+
+  /paste/content/{id_paste}:
+    get:
+      operationId: api.pastes.content
+      tags:
+        - Paste
+      summary: Fecth a paste content
+      description: Fecth a paste content
+      parameters:
+        - name: id_paste
+          description: ID of the paste to return the content.
+          in: path
+          type: integer
+          required: true
+
+      responses:
+        200:
+          description: Paste content
+          schema:
+            type: object
+            properties:
+              content:
+                type: string
+              next_id:
+                type: integer
+              previous_id:
+                type: integer
+              hit_count:
+                type: integer
+
+
+  /hit/{source_type}/{source_id}:
+    get:
+      operationId: api.hits.get_by_source
+      tags:
+        - Hit
+      summary: Get all the hits of a given source.
+      parameters:
+        - name: source_type
+          description: Type of the source.
+          in: path
+          type: string
+          required: true
+        - name: source_id
+          description: Numeric id of the source.
+          in: path
+          type: integer
+          required: true
+      responses:
+        200:
+          description: Hit content
+          schema:
+            type: object
+            properties:
+              payload:
+                type: array
+                items:
+                 $ref: '#/definitions/Hit'
+              length:
+                type: integer
+                format: int64
+
+definitions:
+  Paste:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      key:
+        type: string
+      scrape_url:
+        type: string
+      full_url:
+        type: string
+      size:
+        type: integer
+        format: int64
+      title:
+        type: string
+      sintax:
+        type: string
+      file_path:
+        type: string
+      username:
+        type: string
+      hits:
+        type: integer
+        format: int64
+      date:
+        type: integer
+        format: int64
+      expire:
+        type: integer
+        format: int64
+
+  Hit:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      entity:
+        type: string
+      source_type:
+        type: string
+      value:
+        type: string
+      source_id:
+        type: integer
+        format: int64
+      process:
+        type: integer
+        format: int64

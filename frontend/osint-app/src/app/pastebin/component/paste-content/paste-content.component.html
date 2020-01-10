@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="col-md-2 offset-md-5">
+        <button class="o-nav-button" [disabled]="previousId === null" mat-raised-button color="primary"
+                (click)="onClickPrevious()">Previous
+        </button>
+        <button class="o-nav-button" [disabled]="nextId === null" mat-raised-button color="primary"
+                (click)="onClickNext()">Next
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 text-xs-center">
+        <div class="form-group col col-xl-12">
+                <textarea class="form-control" rows=15 cols=150 [readOnly]="true">
+                {{content}}
+                </textarea>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col col-xl-6">
+        <table style="width: 100%" mat-table [dataSource]="hits" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                                  [checked]="selection.hasValue() && isAllSelected()"
+                                  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()"
+                                  (change)="$event ? selection.toggle(row) : null"
+                                  [checked]="selection.isSelected(row)">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+            <!-- Entity -->
+            <ng-container matColumnDef="entity">
+                <th mat-header-cell *matHeaderCellDef> Entity </th>
+                <td mat-cell *matCellDef="let element"> {{element.entity}} </td>
+            </ng-container>
+
+            <!-- Value -->
+            <ng-container matColumnDef="value">
+                <th mat-header-cell *matHeaderCellDef> Value </th>
+                <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+    <div class="col-xl-6">
+        <div class="card mb-3">
+            <div class="card-header">
+                Actions
+            </div>
+            <div class="card-body">
+                <div class="form">
+                    <div class="form-row">
+                        <div class="col-xl-6">
+                            <button style="width: 100%" class="o-nav-button"  mat-raised-button color="basic" (click)="onClickPrevious()">Save status</button>
+                        </div>
+                        <div class="col-xl-6">
+                            <button style="width: 100%" class="o-nav-button"  mat-raised-button color="warn" (click)="onClickPrevious()">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
